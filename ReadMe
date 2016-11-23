@@ -1,0 +1,23 @@
+运行环境：python 2.7
+
+1.修改 conf/config.json 中的 appid和 secret_id和 secret_key
+    "appid":1250000000,
+    "secret_id":"*******",
+    "secret_key":"******",
+    "region":"guangzhou",                      #园区: shanghai, guangzhou, tianjin, guangzhoup
+    "log_level":4,                             #记录log级别 0:debug 1：info 2：warning 3：error
+    "log_file_name":"del_file.log",            #记录log的文件名
+    "dir_thread_num":2,                        #递归搜索文件夹线程数
+    "file_thread_num":5,                       #删除文件线程数
+    "log_out_to_screen":1,                     #log是否打印到屏幕,0:不打印到屏幕,1:打印到屏幕
+    说明：线程数一般不用调整，如果调整过大容易导致对cos系统的操作频控
+2.修改 conf/bucketlist.txt,填写待删除的bucket和文件夹，文件夹必须以/结尾
+  格式如下
+    bucketName, /folder1/
+    bucketName, /folder2/
+    bucketName, /folder3/
+  说明:
+  (1)可以直接填写跟目录/，即bucketName, / 
+  (2)注意文件夹之间不嵌套,比如folder1,folder2,folder3不能有嵌套关系
+
+3.执行python rm_recursive.py
