@@ -30,6 +30,8 @@ ONE_TASK_DEL_FILE_NUMS = 50
 CONFIG_FILE_PATH = "./conf/config.json"
 BUCKET_PATH_LIST_PATH = "./conf/bucketlist.txt"
 
+HAS_FORK = hasattr(os, 'fork')
+
 def loginit():
     global config
     if (config.log_file_name == ""):
@@ -426,7 +428,8 @@ if __name__ == '__main__':
     cos_log = loginit()
     stat = FileStat()
     timestat = TimeStat()
-    Watcher()
+    if HAS_FORK:
+      Watcher()
     main()
     timestat.end()
     stat.logStat()
