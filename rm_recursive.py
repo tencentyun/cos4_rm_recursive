@@ -168,7 +168,8 @@ def delfolder(cos_client, bucket, folder):
     retry = 0
     while (retry < MAX_RETRY_TIMES):
         ret = cos_client.del_folder(delfolderreq)
-        msg = "delfolder fail, bucket="+bucket+",folder="+folder+ret['message']
+        #msg = "delfolder fail, bucket="+bucket+",folder="+folder+ret['message']
+        msg = "delfolder fail, bucket="+bucket+",folder="+folder+str(ret.get('message'))
         if (ret['code'] == 0):
             break
         elif (ret['code'] == -166):
@@ -188,7 +189,8 @@ def delfolder(cos_client, bucket, folder):
             retry += 1
     if (ret['code'] != 0 and  ret['code'] != -166):
         stat.addDelDirFailNum()
-        cos_log.error("delfolder fail, bucket="+bucket+",folder="+folder+ret['message'])
+        #cos_log.error("delfolder fail, bucket="+bucket+",folder="+folder+ret['message'])
+        cos_log.error("delfolder fail, bucket="+bucket+",folder="+folder+str(ret.get('message')))
         return ret['code']
     if (ret['code'] == 0):
         stat.addDelDirSuccNum()
@@ -204,7 +206,8 @@ def delfile(cos_client, bucket, filepath):
     retry = 0
     while (retry < MAX_RETRY_TIMES):
         ret = cos_client.del_file(delfilereq)
-        msg = "delfile fail bucket="+bucket+",file="+filepath+ret['message']
+        #msg = "delfile fail bucket="+bucket+",file="+filepath+ret['message']
+        msg = "delfile fail bucket="+bucket+",file="+filepath+str(ret.get('message'))
         if (ret['code'] == 0):
             break
         #文件不存在
@@ -229,7 +232,8 @@ def delfile(cos_client, bucket, filepath):
             continue
     if (ret['code'] != 0 and  ret['code'] != -166):
         stat.addDelFileFailNum()
-        cos_log.error("delfile fail, bucket="+bucket+",file="+filepath+ret['message'])
+        #cos_log.error("delfile fail, bucket="+bucket+",file="+filepath+ret['message'])
+        cos_log.error("delfile fail, bucket="+bucket+",file="+filepath+str(ret.get('message')))
         return ret['code']
     if (ret['code'] == 0):
         stat.addDelFileSuccNum()
@@ -257,7 +261,8 @@ def delete_r(cos_client, bucket, path, thread_pool_file):
             else:
                 break
         if (listret['code'] != 0):
-            cos_log.error("delete_r: list folder fail:"+path +",return msg:"+ listret['message'])
+            #cos_log.error("delete_r: list folder fail:"+path +",return msg:"+ listret['message'])
+            cos_log.error("delete_r: list folder fail:"+path +",return msg:"+ str(listret.get('message')))
             return listret['code']
         if (len(listret['data']['infos']) == 0):
             break;
