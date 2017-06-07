@@ -4,7 +4,7 @@
     "appid":1250000000,
     "secret_id":"*******",
     "secret_key":"******",
-    "region":"guangzhou",                      #园区: shanghai, guangzhou, tianjin, guangzhoup
+    "region":"guangzhou",                      #园区: shanghai/sh, guangzhou/gz, tianjin/tj, guangzhoup/gzp,chengdu/cd
     "log_level":4,                             #记录log级别 0:debug 1：info 2：warning 3：error
     "log_file_name":"del_file.log",            #记录log的文件名
     "dir_thread_num":2,                        #递归搜索文件夹线程数
