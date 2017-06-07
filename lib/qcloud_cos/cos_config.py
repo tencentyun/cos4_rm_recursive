@@ -8,28 +8,35 @@ class CosRegionInfo(object):
         self._hostname = None
         self._download_hostname = None
 
-        if region == 'shanghai':
+        if region in ['sh', 'shanghai']:
             self._hostname = 'sh.file.myqcloud.com'
             self._download_hostname = 'cossh.myqcloud.com'
 
-        elif region == 'guangzhou':
+        elif region in ['gz', 'guangzhou']:
             self._hostname = 'gz.file.myqcloud.com'
             self._download_hostname = 'cosgz.myqcloud.com'
 
-        elif region == 'guangzhoup':
-            self._hostname = 'gzp.file.myqcloud.com'
-            self._download_hostname = 'cosgzp.myqcloud.com'
-			
-        elif region == 'tianjin':
+        elif region in ['tj', 'tianjin', 'tianjing']:  # bug: for compact previous release
             self._hostname = 'tj.file.myqcloud.com'
             self._download_hostname = 'costj.myqcloud.com'
 
+        elif region in ['sgp', 'singapore']:
+            self._hostname = 'sgp.file.myqcloud.com'
+            self._download_hostname = 'cosspg.myqcloud.com'
+
+        elif region in ['cd', 'chengdu']:
+            self._hostname = 'cd.file.myqcloud.com'
+            self._download_hostname = 'coscd.myqcloud.com'
+
+        elif region is not None:
+            self._hostname = '{region}.file.myqcloud.com'.format(region=region)
+            self._download_hostname = 'cos{region}.myqcloud.com'.format(region=region)
         else:
             if hostname and download_hostname:
                 self._hostname = hostname
                 self._download_hostname = download_hostname
             else:
-                raise ValueError("region or [hostname, download_hostname] must be set, and region should be shanghai/guangzhou")
+                raise ValueError("region or [hostname, download_hostname] must be set, and region should be sh/gz/tj/sgp")
 
     @property
     def hostname(self):
@@ -45,7 +52,7 @@ class CosRegionInfo(object):
 class CosConfig(object):
     """CosConfig 有关cos的配置"""
 
-    def __init__(self, timeout=300, sign_expired=300, enable_https=True, *args, **kwargs):
+    def __init__(self, timeout=300, sign_expired=300, enable_https=False, *args, **kwargs):
         self._region = CosRegionInfo(*args, **kwargs)
         self._user_agent = 'cos-python-sdk-v4'
         self._timeout = timeout
