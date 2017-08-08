@@ -413,9 +413,15 @@ def main():
         bucket = bucketdirList.getBucketName(var)
         path = bucketdirList.getPath(var)
         if (bucket == "" or path == ""):
+            cos_log.debug("config line %s is invalid, please check!" % var)
             continue
         thread_pool_file = threadpool.ThreadPool(config.file_thread_num)
         cos_log.debug("bucket:"+bucket +",path:"+path)
+        cos_log.debug('please commit the target to be deleted. bucket: %s, path: %s (yes/no)' % (bucket, path))
+        answer = sys.stdin.readline()
+        if answer.lower().strip() != "yes":
+            cos_log.debug('answer is not yes. quit')
+            return;
         args = [cos_client,bucket, path, thread_pool_file]
         args_tuple = (args, None)
         args_list = [args_tuple]
