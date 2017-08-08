@@ -413,7 +413,7 @@ def main():
         bucket = bucketdirList.getBucketName(var)
         path = bucketdirList.getPath(var)
         if (bucket == "" or path == ""):
-            cos_log.debug("config line %s is invalid, please check!" % var)
+            cos_log.error("config is invalid at line %s, please check it and try again!" % var)
             continue
         thread_pool_file = threadpool.ThreadPool(config.file_thread_num)
         cos_log.debug("bucket:"+bucket +",path:"+path)
